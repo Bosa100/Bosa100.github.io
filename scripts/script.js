@@ -54,105 +54,71 @@ $(document).ready(function() {
 		}, 250);
 	});
 
-  $("button").click(function() {
-    switch (this.id) {
-      case "prev":
-        if (currentProject === 0) currentProject = 8;
-        else currentProject--;
-        updateFrame();
-        break;
-      case "next":
-        if (currentProject === 8) currentProject = 0;
-        else currentProject++;
-        updateFrame();
-        break;
-      case "close":
-        closeHidden();
-        break;
-      default:
-    }
-  });
+	$("button").click(function() {
+		switch (this.id) {
+			case "prev":
+				if (currentProject === 0) currentProject = 8;
+				else currentProject--;
+				updateFrame();
+				break;
+			case "next":
+				if (currentProject === 8) currentProject = 0;
+				else currentProject++;
+				updateFrame();
+				break;
+			case "close":
+				closeHidden();
+				break;
+			default:
+		}
+	});
 
-  function updateFrame() {
-    $iFrame.fadeTo(300, 0);
-    setTimeout(function() {
-      $iFrame.attr("src", projects[currentProject]);
-      $websiteLink.attr('href', projects[currentProject]);
-      setTimeout(function() {
-        $iFrame.fadeTo(300, 1);
-      }, 500);
-    }, 350);
-  }
+	function updateFrame() {
+		$iFrame.fadeTo(300, 0);
+		setTimeout(function() {
+			$iFrame.attr("src", projects[currentProject]);
+			$websiteLink.attr('href', projects[currentProject]);
+			setTimeout(function() {
+				$iFrame.fadeTo(300, 1);
+			}, 500);
+		}, 350);
+	}
 
-  function hoverIn(current) {
-    if (current.hasClass("allowed")) {
-      current.animate(
-        {
-          backgroundColor: "rgba(0, 0, 0, 0.7)",
-          opacity: 1
-        },
-        350
-      );
-      current.removeClass("allowed");
-    }
-  }
+	function hoverIn(current) {
+		if (current.hasClass("allowed")) {
+			current.animate({ backgroundColor: "rgba(0, 0, 0, 0.7)" , opacity: 1 }, 350);
+			current.removeClass("allowed");
+		}
+	}
 
-  function hoverOut(current) {
-    current.animate(
-      {
-        backgroundColor: "rgba(0, 0, 0, 0)",
-        opacity: 0
-      },
-      350
-    );
-    current.unbind("mouseenter mouseleave");
-    setTimeout(function() {
-      current.addClass("allowed");
-      setTimeout(function() {
-        current.hover(
-          function() {
-            hoverIn($(this));
-          },
-          function() {
-            hoverOut($(this));
-          }
-        );
-        if (current.hasClass("over")) {
-          hoverIn(current);
-        }
-      }, 100);
-    }, 350);
-  }
+	function hoverOut(current) {
+		current.animate({ backgroundColor: "rgba(0, 0, 0, 0)" , opacity: 0 }, 350);
+		current.unbind("mouseenter mouseleave");
+		setTimeout(function() {
+			current.addClass("allowed");
+			setTimeout(function() {
+				current.hover(function() { hoverIn($(this)); }, function() { hoverOut($(this)); });
+				if (current.hasClass("over")) {
+					hoverIn(current);
+				}
+			}, 100);
+		}, 350);
+	}
 
-  function closeHidden() {
-    $menu.animate(
-      {
-        opacity: 0
-      },
-      500
-    );
-    setTimeout(function() {
-      $hidden.animate(
-        {
-          backgroundColor: "rgba(0, 0, 0, 0)",
-        },
-        500
-      );
-      $nav.animate(
-        {
-          opacity: 1
-        },
-        500
-      );
-      setTimeout(function() {
-        $hidden.hide();
-        $iFrame.attr("src", "about:blank");
-      }, 500);
-    }, 300);
-  }
+	function closeHidden() {
+		$menu.animate({ opacity: 0 }, 500);
+		setTimeout(function() {
+			$hidden.animate({ backgroundColor: "rgba(0, 0, 0, 0)" }, 500);
+			$nav.animate({ opacity: 1 }, 500);
+			setTimeout(function() {
+				$hidden.hide();
+				$iFrame.attr("src", "about:blank");
+			}, 500);
+		}, 300);
+	}
   
-  function scrollTo(place) {
-    $scrollTag = $("a[name='" + place + "']");
-    $('html, body').animate({scrollTop: $scrollTag.offset().top}, 650);
-  }
+	function scrollTo(place) {
+		$scrollTag = $("a[name='" + place + "']");
+		$('html, body').animate({scrollTop: $scrollTag.offset().top}, 650);
+	}
 });
